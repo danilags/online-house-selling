@@ -47,6 +47,7 @@ let updateHouse = function(req, res) {
       description   : req.body.description,
       price         : req.body.price,
       owner         : req.body.owner,
+      image         : req.body.image,
       address       : req.body.address,
       location      : {
         long : req.body.long,

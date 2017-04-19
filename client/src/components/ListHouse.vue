@@ -6,10 +6,16 @@
       <li>Description : {{ house.description }}</li>
       <li>Price : {{ house.price }}</li>
       <li>Owner : {{ house.owner }}</li>
+      <li>Address : {{ house.address }}</li>
+      <li>Location : {{ house.location }}</li>
       <li>
         <div class="image">
           <img :src="house.image" alt="">
         </div>
+      </li>
+      <li>
+        <edit-house :datahouse="house"></edit-house>
+        <el-button type="primary" icon="delete" @click="deleteHouse(house)"></el-button>
       </li>
     </ul>
   </div>
@@ -17,12 +23,17 @@
 
 <script>
 import axios from 'axios'
+import EditHouse from './EditHouse'
 
 export default {
+  components: {
+    EditHouse
+  },
   data () {
     return {
       msg: 'List Rumah',
-      houses: []
+      houses: [],
+      dataDelete: null
     }
   },
   methods: {
@@ -36,8 +47,18 @@ export default {
            }).catch(function(err) {
              console.log(err);
            })
-           console.log(self.houses);
+          //  console.log(self.houses);
 
+    },
+    deleteHouse(data) {
+      console.log("-------- + ", data);
+      axios.delete(`http://localhost:3000/house/${data._id}`)
+           .then(function(res) {
+             window.alert('Data success deleted !')
+             window.location.reload();
+           }).catch(function(err) {
+             console.log(err);
+           })
     }
   },
   mounted() {
@@ -52,6 +73,7 @@ export default {
     list-style: none;
     float: left;
     text-align: left;
+    width: 50%;
 }
 
 .image img {
